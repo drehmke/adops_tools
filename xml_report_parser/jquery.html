@@ -53,8 +53,10 @@
                             htrw   += '<thead>';
                             htrw   += '<tr><th colspan="7" style="background-color: #E7E6E6; color: #1F4E78;" id="operativeheader">Operative Lines</th>';
                             htrw   += '<th></th>';
-                            htrw   += '<th colspan="5" style="color: #1F4E78;">Client Tags</th><th></th></tr>';
-                            htrw   += '<tr style="background-color: #DDEBF7;"><th style="background-color: #DDEBF7;">OID</th><th style="background-color: #DDEBF7;">Section</th><th style="background-color: #DDEBF7;">Line ID</th><th style="background-color: #DDEBF7;">Parent LID</th><th style="background-color: #DDEBF7;">Line Name</th><th style="background-color: #DDEBF7;">Start</th><th style="background-color: #DDEBF7;">End</th>';
+                            htrw   += '<th colspan="4" style="color: #1F4E78;">Client Tags</th><th></th></tr>';
+                            //htrw   += '<th colspan="5" style="color: #1F4E78;">Client Tags</th><th></th></tr>';
+                            //htrw   += '<tr style="background-color: #DDEBF7;"><th style="background-color: #DDEBF7;">OID</th>;'
+                            htrw   += '<th style="background-color: #DDEBF7;">Section</th><th style="background-color: #DDEBF7;">Line ID</th><th style="background-color: #DDEBF7;">Parent LID</th><th style="background-color: #DDEBF7;">Line Name</th><th style="background-color: #DDEBF7;">Start</th><th style="background-color: #DDEBF7;">End</th>';
                             htrw   += '<th style="' + rdystyle +'">Ready</th>';
                             htrw   += '<th style="background-color: #DDEBF7;">Tag Size</th><th style="background-color: #DDEBF7;">Tag ID</th><th style="background-color: #DDEBF7;">Tag Name</th><th style="background-color: #DDEBF7;">Tag Start</th><th style="background-color: #DDEBF7;">Tag End</th>';
                             htrw   += '<th style="background-color: #DDEBF7;">Notes</th></tr></thead><tbody>';
@@ -62,7 +64,6 @@
                             $(data).find('OrderLineItemID').each(function( index ){
                                 var $lineitem = $(this);
                                 var itera   = index;
-                                var ostat   = $lineitem.attr("Order_Status");
                                 var oid     = $lineitem.attr("Order_ID");
                                 var section = $lineitem.attr("Section_Name");
                                 var slid    = $lineitem.attr("Sales_Line_Item_ID");
@@ -70,22 +71,35 @@
                                 var slname  = $lineitem.attr("Sales_Line_Item_Name");
                                 var dates   = $lineitem.attr("Start_Date");
                                 var datee   = $lineitem.attr("End_Date");
+                                var ci      = ';'
                                 var checkme = '';
 
 
                                 // first round only
-                                if( index == 0 ) { alert( "Order Status: " + ostat ); }
+                                if( index == 0 )
+                                {
+                                    //var ostat   = $lineitem.attr("Order_Status");
+                                    //var oname   = $lineitem.attr( "Order_Name" );
+                                    ci  = '<div><strong>Campaign Name: </strong>' + $lineitem.attr( "Order_Name" ) + '</div>';
+                                    ci += '<div><strong>Campaign Status: </strong>' + $lineitem.attr( "Order_Status" ) + '</div>'
+                                    $('#dvCampaignInfo').append($(ci));
+                                }
 
                                 // if we don't have a parent ID, than we are a section header (folder in Operative)
                                 if( !pid )
                                 {
                                     clss += 'font-weight: 800; background-color: #D6DCE4; ';
 
-                                    htrw += '<tr style="'+ clss +'"><td class="'+ clss +'">' + oid + '</td>';
+                                    //htrw += '<tr style="'+ clss +'"><td class="'+ clss +'">' + oid + '</td>';
                                     htrw += '<td style="'+ clss +'">' + section + '</td>';
                                     htrw += '<td style="'+ clss +'">' + slid + '</td>';
                                     htrw += '<td style="'+ clss +'"></td>';
-                                    htrw += '<td style="'+ clss + '">' + slname + '</td>';
+                                        var productionFee = "Production|Social|Offline Event Activation_Fee";
+                                        var pRe = new RegExp( '('+ productionFee + ')', 'i' );
+                                        var pResult = pRe.exec( slname );
+                                        if( pResult ) { fade = "color: #808080; "; }
+                                    htrw += '<td style="'+ clss + fade + '">' + slname + '</td>';
+                                        fade = '';
                                     htrw += '<td style="'+ clss +'">' + dates + '</td>';
                                     htrw += '<td style="'+ clss +'">' + datee + '</td>';
                                     htrw += '<td style="'+ clss + ' "></td>'; // ready
@@ -122,7 +136,7 @@
                                             var pResult = pRe.exec( sslname );
                                             if( pResult ) { fade = "color: #808080; "; }
 
-                                            htrw += '<tr style="'+ clss +'"><td '+ clss +'>' + soid + '</td>';
+                                            //htrw += '<tr style="'+ clss +'"><td '+ clss +'>' + soid + '</td>';
                                             htrw += '<td style="'+ clss +'">' + ssection + '</td>';
                                             htrw += '<td style="'+ clss +'">' + sslid + '</td>';
                                             htrw += '<td style="'+ clss +'">' + spid + '</td>';
@@ -278,7 +292,8 @@
             if( size == 'Reskin' )  { size = '1x1'; }
             if( size == '180x50')   { size = '1x1'; }
             newrow  = '<tr>';
-            newrow += '<td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>'; // operative cells
+            //newrow += '<td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>'; // operative cells
+            newrow += '<td></td> <td></td> <td></td> <td></td> <td></td> <td></td>'; // operative cells
             newrow += '<td style="' + rdystyle + '"></td>'; // ready cell
             newrow += '<td>'+ size+'</td> <td></td> <td></td> <td></td> <td></td>'; // client tag cells
             newrow += '<td></td>'; // notes cell
@@ -309,7 +324,10 @@
     </script>
 
     <style>
-        body { font-family: Calibri, Arial, sans-serif; }
+        body { font-family: Calibri, Arial, sans-serif; clear: both; }
+        .fileupload { clear: both; width: 100%; }
+        .fileupload fieldset { width: 100%; }
+        .dvCampaignInfo {  }
     </style>
 </head>
 <body>
@@ -324,14 +342,14 @@
                 <a id="dlink"  style="display:none;"></a>
                 <input type="hidden" name="xmlfilename" id="xmlfilename" value="" /> |
                 <input type="button" onclick="tableToExcel('excelData', 'Correlation')" value="Export to Excel (FF/Chrome)"> |
+                <div id="dvCampaignInfo" class="dvCampaignInfo">
+                </div>
             </fieldset>
-
-
         </div>
     </div>
 </div>
 <div class="body" style="clear: both;">
-    <div id="dvImportRows" class="">
+    <div id="dvImportRows" class="dvImportRows">
 
     </div>
 </div>
