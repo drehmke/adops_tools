@@ -1,0 +1,23 @@
+                                            // Add sizes for lines that only have one ad size
+                                            // If the line name has "Mobile rotational" ...
+                                            var mrRe = new RegExp( 'Rotational_320x480', 'i');
+                                            var mrResult = mrRe.exec( sslname );
+                                            // If the line name as "Rotational" ...
+                                            var rRe = new RegExp( 'Rotational_970x250', 'i');
+                                            var rResult = rRe.exec( sslname );
+                                            // if the line name has "Video" ...
+                                            var vRe = new RegExp( "Video", "i");
+                                            var vResult = vRe.exec( sslname );
+                                            // if the line name is 'HPTO_728x90 | BTF'
+                                            var btfRe = new RegExp( "HPTO_7289x0 | BTF" );
+                                            var btfResult = btfRe.exec( sslname );
+
+                                            // these rows have the same number of rows as ad sizes,
+                                            // so no need to add extras, but we need to track the size that was
+                                            // previously added
+                                            // if the line name as 'FI' for arrival units ...
+                                            var fiRe = new RegExp('FI', 'i');
+                                            var fiResult = fiRe.exec( sslname );
+                                                if( fiResult )  { checksize = true; }
+                                            // if the line name has 'Added Value' ...
+                                            // if the line name has 'Multi-Size' ...
