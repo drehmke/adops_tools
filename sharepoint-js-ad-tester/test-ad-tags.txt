@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<!-- Test Tag ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<a href="http://www.sheknows.com/" target="_blank"><img src="http://cdn.sheknows.com/donna-play/awt/300250-1.jpg" width="300" height="250"/></a>
+
+
+<!-- Test HTML5 Tag -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<ins class='dcmads' style='display:inline-block;width:300px;height:250px'
+    data-dcm-placement='N186801.126567SHEKNOWS/B9395602.127731522'
+    data-dcm-rendering-mode='script'
+    data-dcm-https-only
+    data-dcm-resettable-device-id=''
+    data-dcm-user-defined='mqso:90266298'>
+  <script src='https://www.googletagservices.com/dcm/dcmads.js'></script>
+</ins>
+
+<!-- Test Tag ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<noscript>
+<a href="http://servedby.flashtalking.com/click/8/57472;1633482;0;209;0/?ft_width=728&ft_height=90&url=8439540" target="_blank">
+<img border="0" src="http://servedby.flashtalking.com/imp/8/57472;1633482;205;gif;SheKnows;VANWAFFSheKnowsMakingWholesomeAwesomeCustomEditorialSponsorship728x90Sacremento/?"></a>
+</noscript>
+<script language="Javascript1.1" type="text/javascript">
+var ftClick = "";
+var ftExpTrack_1633482 = "";
+var ftX = "";
+var ftY = "";
+var ftZ = "";
+var ftOBA = 1;
+var ftContent = "";
+var ftCustom = "";
+var ft728x90_OOBclickTrack = "";
+var ftRandom = Math.random()*1000000;
+var ftBuildTag1 = "<scr";
+var ftBuildTag2 = "</";
+var ftClick_1633482 = ftClick;
+if(typeof(ft_referrer)=="undefined"){var ft_referrer=(function(){var r="";if(window==top){r=window.location.href;}else{try{r=window.parent.location.href;}catch(e){}r=(r)?r:document.referrer;}while(encodeURIComponent(r).length>1000){r=r.substring(0,r.length-1);}return r;}());}
+var ftDomain = (window==top)?"":(function(){var d=document.referrer,h=(d)?d.match("(?::q/q/)+([qw-]+(q.[qw-]+)+)(q/)?".replace(/q/g,decodeURIComponent("%"+"5C")))[1]:"";return (h&&h!=location.host)?"&ft_ifb=1&ft_domain="+encodeURIComponent(h):"";}());
+var ftTag = ftBuildTag1 + 'ipt language="javascript1.1" type="text/javascript" ';
+ftTag += 'src="http://servedby.flashtalking.com/imp/8/57472;1633482;201;js;SheKnows;VANWAFFSheKnowsMakingWholesomeAwesomeCustomEditorialSponsorship728x90Sacremento/?ftx='+ftX+'&fty='+ftY+'&ftadz='+ftZ+'&ftscw='+ftContent+'&ft_custom='+ftCustom+'&ftOBA='+ftOBA+ftDomain+'&ft_referrer='+encodeURIComponent(ft_referrer)+'&cachebuster='+ftRandom+'" id="ftscript_728x90" name="ftscript_728x90"';
+ftTag += '>' + ftBuildTag2 + 'script>';
+document.write(ftTag);
+</script>
+
+<!-- Test Tag ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<script type="text/adtag">
+<ins class='dcmads' style='display:inline-block;width:320px;height:50px'
+    data-dcm-placement='N8278.126567.SHEKNOWS/B9453973.128642722'
+    data-dcm-rendering-mode='script'
+    data-dcm-https-only
+    data-dcm-resettable-device-id=''>
+  <script src='//www.googletagservices.com/dcm/dcmads.js'></scr+ipt>
+</ins>
+</script>
+<script language="javascript" type="text/javascript" src="https://cdn.doubleverify.com/dvbs_src.js?ctx=1590491&cmp=9453973&plc=128642722&sid=1339176&dvregion=0&unit=320x50">
+</script>
+
+<!-- Test Tag ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<SCRIPT language='JavaScript1.1' SRC="https://ad.doubleclick.net/ddm/adj/N9009.2146131STYLECASTER/B9479553.128868609;sz=728x90;ord=[timestamp];dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?">
+</SCRIPT>
+<NOSCRIPT>
+<A HREF="https://ad.doubleclick.net/ddm/jump/N9009.2146131STYLECASTER/B9479553.128868609;sz=728x90;ord=[timestamp]?">
+<IMG SRC="https://ad.doubleclick.net/ddm/ad/N9009.2146131STYLECASTER/B9479553.128868609;sz=728x90;ord=[timestamp];dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?" BORDER=0 WIDTH=728 HEIGHT=90 ALT="Advertisement"></A>
+</NOSCRIPT>
+
+
+<!-- Test Tag ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<script src="http://bs.serving-sys.com/BurstingPipe/adServer.bs?cn=rsb&c=28&pli=16799202&PluID=0&w=300&h=50&ord=%n&ucm=true"></script>
+<noscript>
+<a href="http://bs.serving-sys.com/BurstingPipe/adServer.bs?cn=brd&FlightID=16799202&Page=&PluID=0&Pos=1718496247" target="_blank"><img src="http://bs.serving-sys.com/BurstingPipe/adServer.bs?cn=bsr&FlightID=16799202&Page=&PluID=0&Pos=1718496247" border=0 width=300 height=50></a>
+</noscript>
+
+<!-- Test Tag ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<div class="celtra-ad-v3">
+    <!-- externalCreativeId  = raw %ecid! -->
+    <!-- externalPlacementId = raw %epid! -->
+    <!-- externalSiteId      = raw %esid! -->
+    <!-- externalLineItemId  = raw %eaid! -->
+    <img src="data:image/png,celtra" style="display: none" onerror="
+        (function(img) {
+            var params = {'clickUrl':'%%CLICK_URL_UNESC%%','expandDirection':'undefined','preferredClickThroughWindow':'','clickEvent':'advertiser','externalAdServer':'DFPSmallBusiness','iosAdvId':'%%ADVERTISING_IDENTIFIER_PLAIN%%','androidAdvId':'%%ADVERTISING_IDENTIFIER_PLAIN%%','tagVersion':'3'};
+            [].slice.apply(img.parentNode.childNodes).forEach(function(n) { var decfs = { urldecode: decodeURIComponent, htmldecode: function(v) { var d = document.createElement('div'); d.innerHTML = v; return d.textContent; }, eval: function(v) { return eval(v); }, raw: function(v) { return v; } }; var m; if (n.nodeType == 8 &amp;&amp; (m = n.textContent.match(/^&#92;s+([&#92;w.]+)(&#92;[.+&#92;])?&#92;s+=&#92;s+(&#92;w+)&#92;s+(.*)$/i))) { try { params[m[1]+(m[2] || '')] = decfs[m[3]](m[4].replace(/^&#92;s+|&#92;s+$/g, '')); } catch (e) {} } });
+            var req = document.createElement('script');
+            req.id = params.scriptId = 'celtra-script-' + (window.celtraScriptIndex = (window.celtraScriptIndex||0)+1);
+            params.clientTimestamp = new Date/1000;
+            params.clientTimeZoneOffsetInMinutes = new Date().getTimezoneOffset();
+            var src = (window.location.protocol == 'https:' ? 'https' : 'http') + '://ads.celtra.com/98d592d9/web.js?';
+            for (var k in params) {
+                src += '&amp;' + encodeURIComponent(k) + '=' + encodeURIComponent(params[k]);
+            }
+            req.src = src;
+            img.parentNode.insertBefore(req, img.nextSibling);
+        })(this);
+    "/>
+</div>
+
+
+<!-- Test Tag ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<script type="text/adtag">
+<ins class='dcmads' style='display:inline-block;width:300px;height:250px'
+    data-dcm-placement='N8278.126567.SHEKNOWS/B9482573.128934707'
+    data-dcm-rendering-mode='script'
+    data-dcm-https-only
+    data-dcm-resettable-device-id=''>
+  <script src='https://www.googletagservices.com/dcm/dcmads.js'></scr+ipt>
+</ins>
+</script>
+<script language="javascript" type="text/javascript" src="https://cdn.doubleverify.com/dvbs_src.js?ctx=1590491&cmp=9482573&plc=128934707&sid=1339176&dvregion=0&unit=300x250">
+</script>
+
+
+<!-- Test Tag ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+https://x3.vindicosuite.com/serve/?v=5;m=3;l=457977;c=899013;b=3881419;a=68000;ts=TIMESTAMP;ad=CPn5GxCXjgoY7iggCygLMOWMATjVkQFA5tkRSO3nD1DF7zZYy%2FPsAWCgkwRo0q8gcAF4AYgBAJABAZgBAKIBEzQwNTM3MDQxMTkwMTc5MTI0MzKyAQhDUkVBVElWRbgBAcABAMgBANABANgBAA%3D%3D;ep=1;pm=1
+
+
+<!-- Test Tag ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<SCRIPT language='JavaScript1.1' SRC="https://ad.doubleclick.net/ddm/adj/N3705.126567.SHEKNOWS/B9395702.128085275;sz=970x250;ord=[timestamp];dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?">
+</SCRIPT>
+<NOSCRIPT>
+<A HREF="https://ad.doubleclick.net/ddm/jump/N3705.126567.SHEKNOWS/B9395702.128085275;sz=970x250;ord=[timestamp]?">
+<IMG SRC="https://ad.doubleclick.net/ddm/ad/N3705.126567.SHEKNOWS/B9395702.128085275;sz=970x250;ord=[timestamp];dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?" BORDER=0 WIDTH=970 HEIGHT=250 ALT="Advertisement"></A>
+</NOSCRIPT>
+
+
+
+<!-- Test Tag ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<script src="http://fw.adsafeprotected.com/rjss/bs.serving-sys.com/53301/8001696/BurstingPipe/adServer.bs?cn=rsb&c=28&pli=16510315&PluID=0&w=300&h=250&ord=%n&ucm=true"></script>
+<noscript>
+<a href="http://bs.serving-sys.com/BurstingPipe/adServer.bs?cn=brd&FlightID=16510315&Page=&PluID=0&Pos=2054297241" target="_blank"><img src="http://fw.adsafeprotected.com/rfw/bs.serving-sys.com/53301/8001695/BurstingPipe/adServer.bs?cn=bsr&FlightID=16510315&Page=&PluID=0&Pos=2054297241" border=0 width=300 height=250></a>
+</noscript>
+
+
+<!-- Test Tag ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<!--
+  P7R9ZX_DSW_DSW_009_Endemic_SHEKNOWS.COM_Product_StyleCaster_Premium_Fashion_320x50_Run of Network_Behavioral_F25-54_1 x 1_Click and View_Medialets_NA
+  Campaign: 2016 DSW Spring
+  App/Site: SheKnows - Site
+  320 x 50
+-->
+
+<script type="text/javascript">
+
+(function(s,n,u,o,i){
+for(i in o)o.hasOwnProperty(i)&&(u+='&'+i+'='+encodeURIComponent(o[i]));document.write('<script src="'+(location.protocol=='https:'?s+u:n+u+decodeURI('" onerror="document.write(%27<script src=%5c%27')+s+u+decodeURI('%5c%27><%27+%27/script>%27)'))+'"><'+'/script>');
+}('https://s-cdn-tag.medialytics.com','http://tag.medialytics.com','/tag?format=dw',{
+  tagID: "se09171de680c4bc8aec88dfdfadaa1b5",
+  click: "$$_DESTINATION_URL_$$",
+  ls: true,
+  imppx: ""
+}));
+</script>
+<noscript>
+<a target="_blank" href="http://clk.medialytics.com/href?0.type=i&0.key=MMAdClickthrough&tagID=se09171de680c4bc8aec88dfdfadaa1b5&impunique=RANDOM">
+<img src="http://c.medialytics.com/creative?type=s&tagID=se09171de680c4bc8aec88dfdfadaa1b5&impunique=RANDOM" width="320" height="50"/>
+</a>
+<img src="https://ad.doubleclick.net/ddm/trackimp/N339.sheknow.com/B9494253.129307764;dc_trk_aid=302330659;dc_trk_cid=69343628;ord=$$_RANDOM_$$;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?" width="1" height="1"/>
+
+</noscript>
+
+
+<!-- Test Tag ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<SCRIPT language='JavaScript1.1' SRC="https://ad.doubleclick.net/ddm/adj/N339.sheknow.com/B9494253.129306245;sz=300x250;ord=[timestamp];dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?">
+</SCRIPT>
+<NOSCRIPT>
+<A HREF="https://ad.doubleclick.net/ddm/jump/N339.sheknow.com/B9494253.129306245;sz=300x250;ord=[timestamp]?">
+<IMG SRC="https://ad.doubleclick.net/ddm/ad/N339.sheknow.com/B9494253.129306245;sz=300x250;ord=[timestamp];dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?" BORDER=0 WIDTH=300 HEIGHT=250 ALT="Advertisement"></A>
+</NOSCRIPT>
+
+<!-- Test Tag ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<A HREF="https://ad.doubleclick.net/ddm/jump/N3577.stylecaster/B9428917.129842481;sz=970x250;kw=[url_encoded_publisher_data];ord=[timestamp]?">
+<IMG SRC="https://ad.doubleclick.net/ddm/ad/N3577.stylecaster/B9428917.129842481;sz=970x250;kw=[url_encoded_publisher_data];ord=[timestamp];dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?" BORDER=0 WIDTH=970 HEIGHT=250 ALT="Advertisement"></A>
+
+<!-- Test Tag ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<SCRIPT language='JavaScript1.1' SRC="https://ad.doubleclick.net/ddm/adj/N3577.stylecaster/B9428917.129842481;sz=970x250;kw=[url_encoded_publisher_data];ord=[timestamp];dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?">
+</SCRIPT>
+<NOSCRIPT>
+<A HREF="https://ad.doubleclick.net/ddm/jump/N3577.stylecaster/B9428917.129842481;sz=970x250;kw=[url_encoded_publisher_data];ord=[timestamp]?">
+<IMG SRC="https://ad.doubleclick.net/ddm/ad/N3577.stylecaster/B9428917.129842481;sz=970x250;kw=[url_encoded_publisher_data];ord=[timestamp];dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?" BORDER=0 WIDTH=970 HEIGHT=250 ALT="Advertisement"></A>
+</NOSCRIPT>
+
+<!-- Test Tag ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<!-- this seemed to work fine, but it made the iframe larger than 10x10, so just curious what it was doing - and it doesn't have any sizes, so it's a good "else" test case -->
+<script src="https://sb.voicefive.com/c2/17054927/rs.js#c1=3&amp;c3=622485&amp;c4=34667214&amp;c5=17062434&amp;c6=&amp;c10=1&amp;c11=&amp;c13=&amp;c16=gen&amp;"></script>
+
+<!-- Test Tag ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<!-- SheKnows US : P5VL42_GLE_HAX_161_Content_SHEKNOWS.COM_MassAud_DESK HPTO Masthead 11/11_HP Takeover_Contextual_P30-54_1 x 1_Site-served_NV_NA -->
+<noscript class="MOAT-mindsharelgsizmek896292948216?moatClientLevel1=594280&amp;moatClientLevel2=8697&amp;moatClientLevel3=15214359&amp;moatClientLevel4=1x1_Site_Served_Unit&amp;moatClientSlicer1=-&amp;moatClientSlicer2=-"></noscript>
+<script src="https://z.moatads.com/mindsharelgsizmek896292948216/moatad.js#moatClientLevel1=594280&moatClientLevel2=8697&moatClientLevel3=15214359&moatClientLevel4=1x1_Site_Served_Unit&moatClientSlicer1=-&moatClientSlicer2=-&skin=0" type="text/javascript"></script>
+
+<!-- Test Tag ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<noscript>
+<a href="%%CLICK_URL_UNESC%%https://servedby.flashtalking.com/click/8/57472;1633542;0;209;0/?ft_width=300&ft_height=250&url=8439652" target="_blank">
+<img border="0" src="https://servedby.flashtalking.com/imp/8/57472;1633542;205;gif;SheKnows;VANWAFFSheKnowsMediaGeoplusContextuallyTargeted300x250Sacremento/?"></a>
+</noscript>
+<script language="Javascript1.1" type="text/javascript">
+var ftClick = "%%CLICK_URL_ESC%%";
+var ftExpTrack_1633542 = "";
+var ftX = "";
+var ftY = "";
+var ftZ = "";
+var ftOBA = 1;
+var ftContent = "";
+var ftCustom = "";
+var ft300x250_OOBclickTrack = "";
+var ftRandom = Math.random()*1000000;
+var ftBuildTag1 = "<scr";
+var ftBuildTag2 = "</";
+var ftClick_1633542 = ftClick;
+if(typeof(ft_referrer)=="undefined"){var ft_referrer=(function(){var r="";if(window==top){r=window.location.href;}else{try{r=window.parent.location.href;}catch(e){}r=(r)?r:document.referrer;}while(encodeURIComponent(r).length>1000){r=r.substring(0,r.length-1);}return r;}());}
+var ftDomain = (window==top)?"":(function(){var d=document.referrer,h=(d)?d.match("(?::q/q/)+([qw-]+(q.[qw-]+)+)(q/)?".replace(/q/g,decodeURIComponent("%"+"5C")))[1]:"";return (h&&h!=location.host)?"&ft_ifb=1&ft_domain="+encodeURIComponent(h):"";}());
+var ftTag = ftBuildTag1 + 'ipt language="javascript1.1" type="text/javascript" ';
+ftTag += 'src="https://servedby.flashtalking.com/imp/8/57472;1633542;201;js;SheKnows;VANWAFFSheKnowsMediaGeoplusContextuallyTargeted300x250Sacremento/?ftx='+ftX+'&fty='+ftY+'&ftadz='+ftZ+'&ftscw='+ftContent+'&ft_custom='+ftCustom+'&ftOBA='+ftOBA+ftDomain+'&ft_referrer='+encodeURIComponent(ft_referrer)+'&cachebuster='+ftRandom+'" id="ftscript_300x250" name="ftscript_300x250"';
+ftTag += '>' + ftBuildTag2 + 'script>';
+document.write(ftTag);
+</script>
+
+<!-- Test Tag ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Redirect Image:
+https://ad.doubleclick.net/ddm/ad/N6344.126567.SHEKNOWS/B9459771.128787499;sz=300x250
+
+Redirect Clickthrough:
+https://ad.doubleclick.net/ddm/jump/N6344.126567.SHEKNOWS/B9459771.128787499;sz=300x250
+
+<!-- Test Tag ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<!-- Burts Bees - with DFP macros - is not showing up with macros -->
+<SCRIPT language='JavaScript1.1' SRC="https://fw.adsafeprotected.com/rjss/dc/51165/7541017/ddm/adj/N7088.126567.SHEKNOWS/B9355517.127489549;sz=300x250;click0=%%CLICK_URL_UNESC%%;ord=%%CACHEBUSTER%%;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?">
+</SCRIPT>
+<NOSCRIPT>
+<A HREF="%%CLICK_URL_UNESC%%https://ad.doubleclick.net/ddm/jump/N7088.126567.SHEKNOWS/B9355517.127489549;sz=300x250;ord=%%CACHEBUSTER%%?">
+<IMG SRC="https://fw.adsafeprotected.com/rfw/dc/51165/7541015/ddm/ad/N7088.126567.SHEKNOWS/B9355517.127489549;sz=300x250;ord=%%CACHEBUSTER%%;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?" BORDER=0 WIDTH=300 HEIGHT=250 ALT="Advertisement"></A>
+</NOSCRIPT>
+
+<!-- Test Tag ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<!-- Burts Bees - without DFP macros -->
+<SCRIPT language='JavaScript1.1' SRC="https://fw.adsafeprotected.com/rjss/dc/51165/7541017/ddm/adj/N7088.126567.SHEKNOWS/B9355517.127489549;sz=300x250;click0=;ord=;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?">
+</SCRIPT>
+<NOSCRIPT>
+<A HREF="https://ad.doubleclick.net/ddm/jump/N7088.126567.SHEKNOWS/B9355517.127489549;sz=300x250;ord=?">
+<IMG SRC="https://fw.adsafeprotected.com/rfw/dc/51165/7541015/ddm/ad/N7088.126567.SHEKNOWS/B9355517.127489549;sz=300x250;ord=;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=?" BORDER=0 WIDTH=300 HEIGHT=250 ALT="Advertisement"></A>
+</NOSCRIPT>
+
+<!-- Test Tag ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//To track Impressions use the following URL:
+http://bs.serving-sys.com/BurstingPipe/adServer.bs?cn=tf&c=19&mc=imp&pli=16838805&PluID=0&ord=%n&rtu=-1
+//To track Clicks use the following URL:
+//Note: Please ensure that you implement a click tracking URL only in the clicks location in your ad server,
+//and an impression tracking URL only in the impression tracking location.
+//Incorrect implementation of these URLs will result in major billing and reporting discrepancies.
+http://bs.serving-sys.com/BurstingPipe/adServer.bs?cn=tf&c=20&mc=click&pli=16838805&PluID=0&ord=%n

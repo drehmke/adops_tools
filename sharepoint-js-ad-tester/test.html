@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Javascript Library Dependancies -->
+    <script src="http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.8.3.js"></script>
+    <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+    <!-- Ignite UI Required Combined JavaScript Files -->
+    <script src="http://cdn-na.infragistics.com/igniteui/2016.1/latest/js/infragistics.core.js"></script>
+    <script src="http://cdn-na.infragistics.com/igniteui/2016.1/latest/js/infragistics.dv.js"></script>
+    <script src="http://cdn-na.infragistics.com/igniteui/2016.1/latest/js/infragistics.lob.js"></script>
+    <link href="http://cdn-na.infragistics.com/igniteui/2016.1/latest/css/structure/infragistics.css" rel="stylesheet" />
+    <script src="js/qa.js"></script>
+
+    <!-- Stylesheets -->
+    <link type="text/css" rel="stylesheet" href="css/jquery-ui.min.css">
+    <link href="http://cdn-na.infragistics.com/igniteui/2016.1/latest/css/themes/infragistics/infragistics.theme.css" rel="stylesheet" />
+    <link type="text/css" rel="stylesheet" href="css/qa.css">
+
+	<script type="text/javascript">
+        $(function(){
+            // data
+            var populationData = [
+                { "CountryName": "China", "1995": 1216, "2005": 1297, "2015": 1361, "2025": 1394 },
+                { "CountryName": "India", "1995": 920, "2005": 1090, "2015": 1251, "2025": 1396 },
+                { "CountryName": "United States", "1995": 197, "2005": 229, "2015": 256, "2025": 277 },
+                { "CountryName": "Indonesia", "1995": 197, "2005": 229, "2015": 256, "2025": 227 },
+                { "CountryName": "Brazil", "1995": 161, "2005": 186, "2015": 204, "2025": 218 }
+            ];
+
+            // grid
+            $("#grid").igGrid({
+                width: "100%",
+                dataSource: populationData,
+                autoGenerateColumns: false,
+                columns:[{
+                    key: "CountryName",
+                    headerText: "Country",
+                    width: "33.33%"
+                }, {
+                    key: "2005",
+                    headerText: "2005",
+                    width: "33.33%"
+                }, {
+                    key: "2015",
+                    headerText: "2015",
+                    width: "33.33%"
+                }],
+                features: [{
+                    name: "Sorting",
+                    columnSettings:[{
+                        columnKey: "2015",
+                        currentSortDirection: "descending"
+                    }]
+                }]
+            });
+
+            // Data Chart
+            $("#chart").igDataChart({
+                width: "100%",
+                height: "300px",
+                title: "Population per Country",
+                subtitle: "Five largest projected populations for 2015",
+                dataSource: populationData,
+                axes: [{
+                    name: "NameAxis",
+                    type: "categoryX",
+                    title: "Country",
+                    label: "CountryName"
+                }, {
+                    name: "PopulationAxis",
+                    type: "numericY",
+                    minimumValue: 0,
+                    title: "Projected Population (Millions of People)",
+                }],
+                series: [{
+                    name: "2015Population",
+                    type: "column",
+                    xAxis: "NameAxis",
+                    yAxis: "PopulationAxis",
+                    valueMemberPath: "2015"
+                }]
+            });
+        });
+	</script>
+</head>
+
+<body>
+<div class="att">
+
+    <div class="tp fullwidth head">
+      <div class="col1">
+          <div class="tagtext">
+              <h2>... Paste Your Tag Here ...</h2>
+              <textarea class="tagtesttextarea" id="tagtest"></textarea>
+          </div>
+      </div>
+      <div class="col2">
+          <h2>... Actions ...</h2>
+          <div class="button tester" id="tester">Test Tag</div>
+          <div class="button tester2" id="tester2">Test in a New Window</div>
+          <div class="button cleaner" id="cleaner">Clear Tag</div>
+      </div>
+      <div class="col3">
+          <h2>... Info ...</h2>
+          <div class="testtaginfo">
+            <div class="ttisizeinfo" id="ttisizeinfo">
+              <span class="ttiheader">Ad Tag Size: </span>&nbsp;
+              <span class="ttisize" id="ttisize"></span>
+            </div>
+            <div class="ttiproviderinfo" id="ttiproviderinfo">
+              <span class="ttiheader">Ad Tag Provider: </span>&nbsp;
+              <span class="ttiprovider" id="ttiprovider"></span>
+              <span class="ttiproviderunknown" id="ttiproviderunknown"><span class="unknown">Unknown</span>! This could be a test tag, but if you feel it is not, <a href="mailto:donna.ryan@sheknows.com?subject=Ad Test Provider Update Request">email</a> this tag to Donna and she'll see about adding it to the list of provider name's she has pulled from the tags.</span>
+            </div>
+            <div class="ttisecureinfo" id="ttisecureinfo">
+              <span class="ttiheader">Ad Tag Security: </span>&nbsp;
+              <span class="ttisecure" id="ttisecure"></span>
+              <span class="ttiunsecure" id="ttiunsecure">This tag was determined to be provided via unsecure HTTP methods. While this should not currently affect campaigns, Google has sent an announcement that they will (eventually) block unsecure tags.</span>
+            </div>
+          </div>
+      </div>
+    </div> <!-- head -->
+
+    <div class="tp fullwidth body">
+      <h2>... Your Ad Tag ...</h2>
+      <div id="displayad" class="displayad">
+
+      </div>
+        <div class="excel-testing">
+            <div id="grid_container" tabindex="0" class="ui-widget ui-helper-clearfix ui-corner-all ui-iggrid" style="width: 100%; position: relative;">
+                <div id="grid_scroll" class="ui-iggrid-scrolldiv ui-widget-content" data-scroll="true" data-onedirection="true" style="overflow-y: hidden; overflow-x: auto;">
+
+                </div>
+            </div>
+        </div>
+    </div> <!-- body -->
+
+    <div class="tp fullwidth foot">
+      <h3>...Some Notes...</h3>
+      <div class="notes"></div>
+      <div class="note">
+        <h4>Note 1</h4>
+        This is not perfect. If you have any issues with a tag or with the page itself, please let me (donna.ryan) know!
+      </div>
+      <div class="note">
+        <h4>Note 2 - Testing Tags</h4>
+        <ul>
+          <li>Try the tag first with just the "Test Tag" button. If it doesn't display or click properly, try it again with the "Test in New Window".</li>
+          <li>You can paste img tags and clickthrough links directly into the test box. If you are testing an image tag, just click on the "Test Tag" button. If you are testing a clickthrough, use the "Test in New Window".</li>
+        </ul>
+      </div>
+      <div class="note">
+        <h4>Note 3 - Info</h4>
+        I am using a really basic test the tag while it is tested to find the ad size and provider. This is using the tag info itself. I also check the first "http" in the tag to see if it is secure or insecure. As this gets used, I may make things more robust, but it works for right now.
+      </div>
+      <div class="clearfix"></div>
+      </div>
+    </div> <!-- foot -->
+</div> <!-- att -->
+
+
+<!--</div>-->
+
+<!-- Footer Javascript Loads =============================================== -->
+<!-- /Footer Javascript Loads ============================================== -->
+</body>
+</html>

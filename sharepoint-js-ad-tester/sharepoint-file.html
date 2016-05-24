@@ -1,0 +1,57 @@
+<!--
+<script type="text/javascript" language="javascript" src="/sites/Sandbox/dre-test-adops-test/SiteAssets/jquery-1.12.1.min.js"></script>
+<script type="text/javascript" language="javascript" src="/sites/Sandbox/dre-test-adops-test/SiteAssets/qa.js"></script>
+<link type="text/css" rel="stylesheet" href="/sites/Sandbox/dre-test-adops-test/SiteAssets/qa.css">
+-->
+<script type="text/javascript" language="javascript" src="/sites/adoperations/SiteAssets/adops/jquery-1.12.1.min.js"></script>
+<script type="text/javascript" language="javascript" src="/sites/adoperations/SiteAssets/adops/qa.js"></script>
+<link type="text/css" rel="stylesheet" href="/sites/adoperations/SiteAssets/adops/qa.css">
+
+<div class="att">
+
+
+  <div class="tp fullwidth head">
+    <div class="col1">
+        <div class="tagtext">
+            <h2>... Paste Your Tag Here ...</h2>
+            <textarea id="tagtest" enabled></textarea>
+        </div>
+    </div>
+    <div class="col2">
+        <h2>... Actions ...</h2>
+        <div class="button tester" id="tester">Test Tag</div>
+        <div class="button tester2" id="tester2">Test in a New Window</div>
+        <div class="button cleaner" id="cleaner">Clear Tag</div>
+    </div>
+    <div class="col3">
+        <h2>... Info ...</h2>
+        <div class="testtaginfo">
+          <div class="ttisizeinfo" id="ttisizeinfo">
+            <span class="ttiheader">Ad Tag Size: </span>&nbsp;
+            <span class="ttisize" id="ttisize"></span>
+          </div>
+          <div class="ttiproviderinfo" id="ttiproviderinfo">
+            <span class="ttiheader">Ad Tag Provider: </span>&nbsp;
+            <span class="ttiprovider" id="ttiprovider"></span>
+            <span class="ttiproviderunknown" id="ttiproviderunknown"><span class="unknown">Unknown</span>! This could be a test tag, but if you feel it is not, <a href="mailto:donna.ryan@sheknows.com?subject=Ad Test Provider Update Request">email</a> this tag to Donna and she'll see about adding it to the list of provider name's she has pulled from the tags.</span>
+          </div>
+          <div class="ttisecureinfo" id="ttisecureinfo">
+            <span class="ttiheader">Ad Tag Security: </span>&nbsp;
+            <span class="ttisecure" id="ttisecure"></span>
+            <span class="ttiunsecure" id="ttiunsecure">This tag was determined to be provided via unsecure HTTP methods. While this should not currently affect campaigns, Google has sent an announcement that they will (eventually) block unsecure tags.</span>
+          </div>
+        </div>
+    </div>
+  </div> <!-- head -->
+
+  <div class="tp fullwidth body">
+    <h2>... Your Ad Tag ...</h2>
+    <div id="displayad" class="displayad">
+
+    </div>
+  </div> <!-- body -->
+
+  <div class="tp fullwidth foot">
+  </div> <!-- foot -->
+
+</div>

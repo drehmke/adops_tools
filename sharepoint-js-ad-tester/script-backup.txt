@@ -1,0 +1,117 @@
+function findTagSize( adtext )
+{
+  var wArr = new Array(1000,980,970,768,680,480,468,336,320,300,270,250,240,234,216,200,180,180,168,160,125,120,91,88,47,6,5,1);
+  var hArr = new Array(1050,1024,1000,768,600,480,470,400,320,280,250,240,225,215,200,150,125,100,91,90,88,75,66,60,54,50,47,42,36,30,25,20,6,5,1);
+  var m;
+  var padding = 10;
+  var newSizeArr = new Array(); // width, padded width, height, padded height
+
+  // find our width
+  for( w = 0; w < wArr.length; w++ )
+  {
+    
+  }
+  alert( newSizeArr );
+  /*
+  for( h = 0; h < hArr.length; h++ )
+  {
+    if( m = adtext.indexOf(h) )
+    {
+      newSizeArr.push( h );
+      newSizeArr.push( (parseInt(m[2]) * parseInt(padding)/3).toFixed(0) ); // need room on the dialog box
+    }
+  }
+  */
+/*
+if( reW !== null )
+{
+  if((m = reW.exec(adtext)) !== null)
+  { // width
+    if(m.index === reW.lastIndex)
+    { reW.lastIndex++; }
+    newSizeArr.push( m[2] );
+    newSizeArr.push( (parseInt(m[2]) + parseInt(padding)) ); // need room for padding
+
+    // height
+    if((m = reH.exec(adtext)) !== null)
+    {
+      if(m.index === reH.lastIndex)
+      { reH.lastIndex++; }
+    }
+    newSizeArr.push( m[2] );
+    newSizeArr.push( (parseInt(m[2]) * parseInt(padding)/3).toFixed(0) ); // need room for the header
+  }
+}
+alert(newSizeArr);
+*/
+  return newSizeArr;
+}
+
+
+  var reW   = /(&w=)(\d{2,}?\b)/;
+  var reWa  = /(;width:)(\d{2,}?\b)/;
+  var reH   = /(&h=)(\d{2,}?\b)/;
+  var reHa  = /(;height:)(\d{2,}?\b)/;
+
+  
+  
+  function findTagSize( text )
+{
+  var reW   = /(&w=)(\d{2,}?\b)/;
+  var reWa  = /(;width:)(\d{2,}?\b)/;
+  var reH   = /(&h=)(\d{2,}?\b)/;
+  var reHa  = /(;width:)(\d{2,}?\b)/;
+  var m;
+  var padding = 10;
+  var newSizeArr = new Array();
+
+  // is width defined by w=
+  if((m = reW.exec(text)) !== null)
+  {
+    if(m.index === reW.lastIndex)
+    { reW.lastIndex++; }
+    newSizeArr.push( m[2] );
+    newSizeArr.push( (parseInt(m[2]) + parseInt(padding)) ); // need room for padding
+
+
+    // height should be the same format - &h=
+    if((m = reH.exec(text)) !== null)
+    {
+      if(m.index === reH.lastIndex)
+      { reH.lastIndex++; }
+    }
+    newSizeArr.push( m[2] );
+    newSizeArr.push( (parseInt(m[2]) * parseInt(padding)/3).toFixed(0) ); // need room for the header
+
+  } elseif((m = reWa.exec(text)) !== null)
+  {
+    
+  }
+  return newSizeArr;
+}
+
+  /*
+  $( "#opener" ).click(function(){
+    var tag = $( "#tagtest" ).val();
+    //var nsa = findTagSize( tag );
+    var nsa;
+
+    if( nsa != null )
+    {
+      var dialogTitle = nsa[0] + " x " + nsa[2];
+      $( "#dialog" ).dialog( "option", "autoOpen", false );
+      $( "#dialog" ).dialog( "option", "resizeable", true );
+      $( "#dialog" ).dialog( "option", "width", nsa[1] );
+      $( "#dialog" ).dialog( "option", "height", nsa[3] );
+      $( "#dialog" ).dialog( "option", "title", dialogTitle );
+      //alert( tag );
+      $( "#dialog" ).html( tag );
+      $( "#dialog" ).dialog( "open" );
+    }
+    else {
+      $( "#dialog" ).html( tag );
+      $( "#dialog" ).dialog( "open" );
+    }
+  });
+  */
+

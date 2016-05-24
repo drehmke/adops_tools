@@ -1,0 +1,2 @@
+<!-- Mookie ---------------------------------------------------------------- -->
+https://t.mookie1.com/t/v1/imp?migAgencyId=1127&migSource=adsrv2&migRandom=[timestamp]&migTrackDataExt=3573732;127862937;302869078;0&migTrackFmtExt=client;io;ad;crtv

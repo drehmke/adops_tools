@@ -1,0 +1,42 @@
+<div style="clear: both;">
+    <script type="text/javascript">
+        function testTag()
+        {
+            var testad = document.getElementById('tagtest').value;
+            var adtestWin = window.open("","adtestWin");
+            adtestWin.document.write( testad );
+        }
+        function clearTag()
+        {
+            document.getElementById('tagtest').value = "";
+            document.getElementById('tagdisplay').innerHTML = "";
+        }
+    </script>
+    <style>
+        .tp { margin: 10px; padding: 10px; }
+        .col1, .col2 { width: 45%; float: left; }
+        .displaytag { min-height: 90px; }
+        .tagtext textarea { width: 500px; height: 150px; }
+        .button { padding: 10px; border: 1px solid #000; width: 100px; text-align: center; cursor: pointer; }
+
+    </style>
+
+    <div class="tp fullwidth foot">
+
+    </div>
+    <div class="tp col1">
+        <div class="tagtext">
+            <h2>... Paste Your Tag Here ...</h2>
+            <textarea id="tagtest""></textarea>
+        </div>
+    </div>
+    <div class="tp col2">
+        <h2>... Actions ...</h2>
+        <div onClick="testTag();" class="button">Test Tag</div>
+        <div onClick="clearTag();" class="button">Clear Tag</div>
+    </div>
+    <div class="tp fullwidth foot">
+
+    </div>
+
+</div>

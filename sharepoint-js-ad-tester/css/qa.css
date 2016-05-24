@@ -1,0 +1,50 @@
+body
+{
+  font-family: "Segoe UI Semilight", "Segoe UI", "Segoe", Tahoma, Helvetica, Arial, sans-serif;
+}
+/* Ad Tag Testing */
+.att { clear: both; position: relative; width: 100%; height: 100%; }
+.att .clearfix { clear: all; }
+.att .fullwidth { clear: both; }
+.att .displayad { display: none; }
+.att .tp { margin: 10px; padding: 10px; }
+.att .col1, .att .col3 { width: 35%; float: left; }
+.att .col2 { width: 15%; min-width: 180px; margin-right: 10px; margin-left: 10px; float: left; }
+.att .displaytag { min-height: 90px; }
+.att .tagtext textarea {
+  -webkit-box-sizing: border-box;
+  -mox-box-sizing:    border-box;
+  box-sizing:         border-box;
+  width:              100%;
+  height:             250px;
+}
+.att .button { padding: 10px; border: 1px solid #000; width: 160px; text-align: center; cursor: pointer; margin-bottom: 10px; }
+.att .tester { background-color: #a1d490; }
+.att .tester2 { background-color: #9fb928; }
+.att .cleaner { background-color: #d490a0; }
+.att .testtagbg { display: none; }
+.att .testtagbg { position: absolute; top: 0; left: 0; width: 1040px; height: 500px; margin-left: auto; margin-right: auto; border: 1px solid #eee; background-color: #fefefe; }
+.att .testtagbg .ttbgclose { position: absolute; bottom: 5px; right: 5px; float: right; }
+.att .displaytestad { border: none; }
+.att .ttiheader { font-weight: bold; }
+.att .ttiproviderunknown { display: none; }
+.att .unknown { font-weight: bold; color: rgb(201, 62, 48); }
+.att .ttiunsecure { display: none; }
+
+.att .good    { color: #0e4621; background-color: rgb(189, 230, 188); display: block-inline; }
+.att .warning { color: #704a08; background-color: rgb(212, 203, 146); display: block-inline; }
+.att .bad     { color: #632222; background-color: rgb(245, 162, 162); display: block-inline; }
+
+.att .foot { background-color: #fbfbf6; clear: all; }
+.att .foot .notes { clear: all; }
+.att .foot .note
+{
+  width: 350px;
+  float: left;
+  margin: 5px;
+  padding: 10px;
+  border: 1px solid #f0f1d9;
+  -webkit-box-shadow: 5px 5px 5px 0px rgba(235,234,223,1);
+  -moz-box-shadow: 5px 5px 5px 0px rgba(235,234,223,1);
+  box-shadow: 5px 5px 5px 0px rgba(235,234,223,1);
+}
