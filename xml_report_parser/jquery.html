@@ -201,7 +201,7 @@
                                                         if( !splitname )    { checkme = sslname; }
                                                         else                { checkme = splitname; }
                                                         //console.log( checkme );
-                                                        var checkAdSizes = "728x90|970x250|300x250|320x50|320x480|300x600|160x600";
+                                                        var checkAdSizes = "728x90|970x250|970x66|300x250|320x50|320x480|300x600|160x600";
                                                         var sizeRe = new RegExp( '(' + checkAdSizes + ')', "i");
                                                         var sizeResult = sizeRe.exec( checkme );
 
@@ -342,6 +342,7 @@
                 <a id="dlink"  style="display:none;"></a>
                 <input type="hidden" name="xmlfilename" id="xmlfilename" value="" /> |
                 <input type="button" onclick="tableToExcel('excelData', 'Correlation')" value="Export to Excel (FF/Chrome)"> |
+                <hr />
                 <div id="dvCampaignInfo" class="dvCampaignInfo">
                 </div>
             </fieldset>
