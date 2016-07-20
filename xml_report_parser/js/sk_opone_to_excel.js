@@ -41,25 +41,10 @@ $(document).ready(function() {
                     var clss     = '';
                     var fade     = '';
                     // ---- Colors ---------------------------------------------
-                    var headerfnt   = '#1F4E78';
-                    var o1headerbg  = '#E7E6E6';
-                    var colheaderbg = '#DDEBF7';
-                    var lineitembg  = '#DDEBF7';
-                    var sectionbg   = '#D6DCE4';
-                    var rdystyle = "background-color: #ffffe0; ";
+                    colors = new Colors();
 
                     $(data).find('OrderLineItemID').each(function( index ) {
                         var $lineitem = $(this);
-                        //var itera = index;
-                        //var oid = $lineitem.attr("Order_ID");
-                        //var section = $lineitem.attr("Section_Name");
-                        //var slid = $lineitem.attr("Sales_Line_Item_ID");
-                        //var pid = $lineitem.attr("Parent_Line_Item_ID");
-                        //var slname = $lineitem.attr("Sales_Line_Item_Name");
-                        //var dates = $lineitem.attr("Start_Date");
-                        //var datee = $lineitem.attr("End_Date");
-                        //var pkg = $lineitem.attr("Package");
-                        //var ci = ';'
                         var checkme = '';
 
                         // first round only
@@ -68,10 +53,14 @@ $(document).ready(function() {
                           currCampaign[0] = new Campaigninfo( $lineitem.attr( "Order_Name" ), $lineitem.attr( "Order_Status" ) );
                         }
 
+                        // ---- Start the fun stuff now ------------------------
+
                         if( !$lineitem.attr("Parent_Line_Item_ID") )
                         { // if we don't have a parent ID, than we are a section header (folder in Operative)
+                          // also, need to check to see if we need to fade this line or not
                           // create a new Parentlineitem( oid, section, slid, slname, dates, datee )
-                          currParentlineitem = new Parentlineitem( $lineitem.attr("Order_ID"), $lineitem.attr("Section_Name"), $lineitem.attr("Sales_Line_Item_ID"), $lineitem.attr("Sales_Line_Item_Name"), $lineitem.attr("Start_Date"), $lineitem.attr("End_Date"), $lineitem.attr("Package")  );
+                          var fade = fadeSalesLineItemName( $lineitem.attr("Sales_Line_Item_Name") );
+                          currParentlineitem = new Parentlineitem( $lineitem.attr("Order_ID"), $lineitem.attr("Section_Name"), $lineitem.attr("Sales_Line_Item_ID"), $lineitem.attr("Sales_Line_Item_Name"), fade, $lineitem.attr("Start_Date"), $lineitem.attr("End_Date"), $lineitem.attr("Package")  );
 
                           var childArr = [];
                           // re-parse the file looking for any Parent_Line_Item_ID's that match the current Sales_Line_Item_ID
@@ -79,7 +68,11 @@ $(document).ready(function() {
                             var $slineitem = $(this);
                             if( $slineitem.attr("Parent_Line_Item_ID") == $lineitem.attr("Sales_Line_Item_ID") )
                             {
-                              childArr[childArr.length] = new Childlineitem( $slineitem.attr("Order_ID"), $slineitem.attr("Section_Name"), $slineitem.attr("Sales_Line_Item_ID"), $slineitem.attr("Parent_Line_Item_ID"), $slineitem.attr("Sales_Line_Item_Name"), $slineitem.attr("Start_Date"), $slineitem.attr("End_Date") );
+                              var cfade = fadeSalesLineItemName( $slineitem.attr("Sales_Line_Item_Name") );
+                              // now we need to determine if there are any ad sizes we need to break out into sublines
+                              var subAdSizes = findAdSizes( $slineitem.attr("Sales_Line_Item_Name") );
+                              //alert( subAdSizes );
+                              childArr[childArr.length] = new Childlineitem( $slineitem.attr("Order_ID"), $slineitem.attr("Section_Name"), $slineitem.attr("Sales_Line_Item_ID"), $slineitem.attr("Parent_Line_Item_ID"), $slineitem.attr("Sales_Line_Item_Name"), cfade, $slineitem.attr("Start_Date"), $slineitem.attr("End_Date"), subAdSizes );
                             }
                           });
                           currParentlineitem.children = childArr;
@@ -96,7 +89,7 @@ $(document).ready(function() {
 
 
                     // start our table
-                    htrw.push( tableHeader( o1headerbg, headerfnt, colheaderbg, lineitembg, rdystyle ) );
+                    htrw.push( tableHeader( colors ) );
 
                     // table body
 
@@ -105,18 +98,30 @@ $(document).ready(function() {
                       for( i = 1; i < currCampaign.length; i++ )
                       {
                         current = currCampaign[i];
-                        // parent rows
-                        htrw.push( parentRow( current, sectionbg, rdystyle ) );
+                        // Parse and print our Parent rows
+                        htrw.push( parentRow( current, colors ) );
 
                         if( Array.isArray(current.children) )
                         {
-                          alert( 'we have '+ current.children.length +' children' );
-                          chtrw = [];
+                          var chtrw = [];
                           for( j = 0; j < current.children.length; j++ )
                           { // child rows
-                            alert(j);
-                            tmpchild = childRow( current.children[j], rdystyle);
+                            tmpchild = childRow( current.children[j], colors);
                             chtrw.push( tmpchild );
+
+                            if( Array.isArray( current.children[j].subs ) )
+                            {
+                              if(current.children[j].subs.length > 1 )
+                              {
+                                schtrw = [];
+                                for( k = 0; k < current.children[j].subs.length; k++ )
+                                {
+                                  subrow = addEmptyRow( current.children[j].subs[k], colors.bgreadystyle );
+                                  schtrw.push( subrow );
+                                }
+                                chtrw.push( schtrw.join('\n') );
+                              }
+                            }
                           }
                           htrw.push(chtrw.join('\n'));
                         }
@@ -124,7 +129,7 @@ $(document).ready(function() {
                     }
 
                     // end our table
-                    htrw.push( tableFooter() );
+                    htrw.push( tableFooter( colors ) );
                     var test = htrw.join('\n');
                     $('#dvImportRows').append($(test));
                     //console.log(data[1] + "\n");
@@ -143,110 +148,143 @@ $(document).ready(function() {
 });
 
 // ---- Static HTML Functions --------------------------------------------------
-function tableHeader( o1headerbg, headerfnt, colheaderbg, lineitembg, rdystyle )
+function tableHeader( colors )
 {
     //alert( "tableheader" );
     var hrow = '';
     hrow  = '<table style="border: solid 1px black; font-family: Calibri, sans-serif; font-size: 13px;" id="excelData" name="excelData">';
     hrow += '<thead>';
     // Operative | | Client
-    hrow += '<tr><th colspan="7" style="background-color: '+ o1headerbg + '; color: '+ headerfnt +';" id="operativeheader">Operative Lines</th>';
-    hrow += '<th></th>';
-    hrow += '<th colspan="4" style="color: '+ headerfnt +';">Client Tags</th><th></th></tr>';
+    hrow += '<tr><th colspan="6" style="background-color: '+ colors.bgo1header + '; color: '+ colors.fontpageheader +';" id="operativeheader">Operative Lines</th>';
+    hrow += '<th style="background-color: '+ colors.bgreadystyle +';"></th>';
+    hrow += '<th colspan="4" style="color: '+ colors.fontpageheader +';">Client Tags</th><th></th></tr>';
     // Column Names - Operative
-    hrow += '<th style="background-color: '+ colheaderbg +';">Section</th>' +
-            '<th style="background-color: '+ colheaderbg +';">Line ID</th>' +
-            '<th style="background-color: '+ colheaderbg +'">Parent LID</th>' +
-            '<th style="background-color: '+ colheaderbg +';">Line Name</th>' +
-            '<th style="background-color: '+ colheaderbg +';">Start</th>' +
-            '<th style="background-color: '+ colheaderbg +';">End</th>';
+    hrow += '<th style="background-color: '+ colors.bgcolheader +';">Section</th>' +
+            '<th style="background-color: '+ colors.bgcolheader +';">Line ID</th>' +
+            '<th style="background-color: '+ colors.bgcolheader +'">Parent LID</th>' +
+            '<th style="background-color: '+ colors.bgcolheader +';">Line Name</th>' +
+            '<th style="background-color: '+ colors.bgcolheader +';">Start</th>' +
+            '<th style="background-color: '+ colors.bgcolheader +';">End</th>';
     // Column Names - Ready
-    hrow += '<th style="' + rdystyle +'">Ready</th>';
+    hrow += '<th style="background-color: ' + colors.bgreadystyle +'">Ready</th>';
     // Column Names - Client
-    hrow += '<th style="background-color: ' + lineitembg +';">Tag Size</th>' +
-            '<th style="background-color: ' + lineitembg +';">Tag ID</th>' +
-            '<th style="background-color: ' + lineitembg +';">Tag Name</th>' +
-            '<th style="background-color: ' + lineitembg +';">Tag Start</th>' +
-            '<th style="background-color: ' + lineitembg +';">Tag End</th>';
-    hrow += '<th style="background-color: ' + lineitembg +';">Notes</th></tr>';
+    hrow += '<th style="background-color: ' + colors.bgcolheader +';">Tag Size</th>' +
+            '<th style="background-color: ' + colors.bgcolheader +';">Tag ID</th>' +
+            '<th style="background-color: ' + colors.bgcolheader +';">Tag Name</th>' +
+            '<th style="background-color: ' + colors.bgcolheader +';">Tag Start</th>' +
+            '<th style="background-color: ' + colors.bgcolheader +';">Tag End</th>';
+    hrow += '<th style="background-color: ' + colors.bgcolheader +';">Notes</th></tr>';
     hrow += '</thead><tbody>';
     //alert( hrow );
     return hrow;
 }
-function tableFooter()
+function tableFooter( colors )
 {
     //alert( 'tablefooter' );
     var frow = '';
-    frow  = '<tr><th colspan="13" style="background-color:#ff0000; color:#ffffff;"><b>Not Listed In Operative</b></th></tr>';
+    frow  = '<tr><th colspan="13" style="background-color:'+ colors.bgnotlisted +'; color:'+ colors.fontnotlisted +';"><b>Not Listed In Operative</b></th></tr>';
     frow += '</tbody></table>';
     return frow;
 }
 function addEmptyRow( size, rdystyle )
 {
-    if( size == 'Reskin' )  { size = '1x1'; }
-    if( size == '180x50')   { size = '1x1'; }
+    if( size == 'Reskin' )  { size = '1x1 [Reskin]'; }
+    if( size == '180x50')   { size = '1x1 [180x50]'; }
     newrow  = '<tr>';
-    //newrow += '<td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>'; // operative cells
     newrow += '<td></td> <td></td> <td></td> <td></td> <td></td> <td></td>'; // operative cells
-    newrow += '<td style="' + rdystyle + '"></td>'; // ready cell
-    newrow += '<td>'+ size+'</td> <td></td> <td></td> <td></td> <td></td>'; // client tag cells
+    newrow += '<td style="background-color:' + rdystyle + ';"></td>'; // ready cell
+    newrow += '<td>'+ size +'</td> <td></td> <td></td> <td></td> <td></td>'; // client tag cells
     newrow += '<td></td>'; // notes cell
     newrow += '</tr>';
 
     return newrow;
 }
-function parentRow( lineObj, sectionbg, rdystyle )
+function parentRow( lineObj, colors )
 {
-  var clss = 'font-weight: 800; background-color: ' + sectionbg;
+  //if( lineObj.fade ) { alert( "fade me!" ); }
+  var clss = 'font-weight: 800; background-color: ' + colors.bgsection;
+  if( lineObj.fade ) { clss += '; color:' + colors.fontfade; }
   var row  = '<tr>';
   // Operative Columns
-  row += '<td style="'+clss+'">'+ lineObj.section + '</td>';
-  row += '<td style="'+clss+'">'+ lineObj.slid + '</td>';
-  row += '<td style="'+clss+'"></td>'; // Parent Line Item
-  row += '<td style="'+clss+'">'+ lineObj.slname + '</td>';
-  row += '<td style="'+clss+'">'+ lineObj.dates + '</td>';
-  row += '<td style="'+clss+'">'+ lineObj.datee + '</td>';
+  row += '<td style="'+ clss +';">'+ lineObj.section + '</td>';
+  row += '<td style="'+ clss +';">'+ lineObj.slid + '</td>';
+  row += '<td style="'+ clss +';"></td>'; // Parent Line Item
+  row += '<td style="'+ clss +';">'+ lineObj.slname + '</td>';
+  row += '<td style="'+ clss +';">'+ lineObj.dates + '</td>';
+  row += '<td style="'+ clss +';">'+ lineObj.datee + '</td>';
   // Ready column
-  row += '<td style="'+clss+'"></td>';
+  row += '<td style="'+ clss +';"></td>';
   // Client Columns
-  row += '<td style="'+clss+'" colspan="5">'+ lineObj.pkg + '</td>';
+  row += '<td style="'+ clss +';" colspan="5">'+ lineObj.pkg + '</td>';
   // Notes column
-  row += '<td style="'+clss+'"></td>';
+  row += '<td style="'+ clss +';"></td>';
   row += '</tr>'
 
   return row;
 }
 
-function childRow( lineObj, rdystyle )
+function childRow( lineObj, colors )
 {
-  var row = '<tr style>';
+// figure out if we're printing an ad size or '---'
+  var size = '';
+
+  if( lineObj.fade )
+  {
+    var clss = 'style="color:'+ colors.fontfade +';"';
+    size = '---';
+  }
+  else
+  {
+    var clss = '';
+    if( lineObj.subs.length == 1 )
+    { size = lineObj.subs[0]; }
+    else if( lineObj.subs.length > 1 )
+    { size = '---'; }
+    else
+    { size = '[Ad Size]'; }
+  }
+
+  var row = '<tr>';
   // Operative Columns
-  row += '<td>'+lineObj.section+'</td>';
-  row += '<td>'+lineObj.slid+'</td>';
-  row += '<td>'+lineObj.plid+'</td>';
-  row += '<td>'+lineObj.slname+'</td>';
-  row += '<td>'+lineObj.dates+'</td>';
-  row += '<td>'+lineObj.datee+'</td>';
+  row += '<td '+clss+'>'+ lineObj.section +'</td>';
+  row += '<td '+clss+'>'+ lineObj.slid +'</td>';
+  row += '<td '+clss+'>'+ lineObj.plid +'</td>';
+  row += '<td '+clss+'>'+ lineObj.slname +'</td>';
+  row += '<td '+clss+'>'+ lineObj.dates +'</td>';
+  row += '<td '+clss+'>'+ lineObj.datee +'</td>';
   // Ready Column
-  row += '<td class="'+rdystyle+'"></td>';
+  row += '<td style="background-color:' + colors.bgreadystyle +';"></td>';
   // Client Columns
-  row += '<td>[Ad Size]</td>';
-  row += '<td></td>'; // Tag ID
-  row += '<td></td>'; // Tag Name
-  row += '<td></td>'; // Tag Start
-  row += '<td></td>'; // Tag End
+  row += '<td '+clss+'>' + size + '</td>';
+  row += '<td '+clss+'></td>'; // Tag ID
+  row += '<td '+clss+'></td>'; // Tag Name
+  row += '<td '+clss+'></td>'; // Tag Start
+  row += '<td '+clss+'></td>'; // Tag End
   // Note Column
-  row += '<td></td>';
+  row += '<td '+clss+'></td>';
   row += '</tr>';
 
   return row;
 }
 
 // ---- General Functions Needed -----------------------------------------------
-function findAdSizes( linename, rdystyle )
+/* fadeSalesLineItemName
+ * Find out if we have certain key words in the Sales_Line_Item_Name.
+ */
+function fadeSalesLineItemName( slname )
 {
-    var newrow      = '';
+  var productionFee = "Production|Social|_fee";
+  var pRe = new RegExp( '('+ productionFee + ')', 'i' );
+  var pResult = pRe.exec( slname );
+  if( pResult ) { return true; }
+  else          { return false; }
+}
+
+function findAdSizes( linename )
+{
+    //var newrow      = '';
     var splitname   = '';
+    var adArr = [];
 
     var arLineParts = linename.split('|');
     //console.log(arLineParts.length);
@@ -262,11 +300,15 @@ function findAdSizes( linename, rdystyle )
         {
             newsplit = splitname.split(adSize[0]);
             splitname = newsplit[1];
-            newrow += addEmptyRow( adSize[0], rdystyle );
+            //newrow += addEmptyRow( adSize[0], rdystyle );
+            adArr[adArr.length] = adSize[0];
+        }
+        else {
+          adArr = '';
         }
     }
 
-    return newrow;
+    return adArr;
 }
 
 // ---- Package Specific Functions ---------------------------------------------
@@ -274,6 +316,12 @@ function sksponsorship()
 {
 
 }
+function skmaddedvalueallsizes()
+{
+  var adsizes = ["300x250", "728x90", "320x50"];
+
+}
+
 // ---- Export to Excel --------------------------------------------------------
 var tableToExcel = (function () {
     var uri = 'data:application/vnd.ms-excel;base64,'
@@ -295,29 +343,46 @@ var tableToExcel = (function () {
 // ---- end Export to Excel ----------------------------------------------------
 
 // ---- Prototypes -------------------------------------------------------------
+function Colors()
+{ // styles need to be hardcoded for Excel, so we'll just set the colors in an object
+  this.fontpageheader = '#1F4E78';  // dark ink blue
+  this.bgo1header     = '#E7E6E6';  // medium grey
+  this.bgclientheader = '#ffffff';  // white
+  this.bgcolheader    = '#DDEBF7';  // light blue
+  this.bgsection      = '#D6DCE4';  // dusky blue
+  this.bgreadystyle   = '#ffffe0';  // light yellow
+  this.bgnotlisted    = '#ff0000';  // red
+  this.fontnotlisted  = '#ffffff';  // white
+  this.fontfade       = '#808080';  // dark grey
+}
 function Campaigninfo( cname, cstatus )
 {
   this.cname = cname;
   this.cstatus = cstatus;
 }
-function Parentlineitem(oid, section, slid, slname, dates, datee, pkg, children )
+function Parentlineitem(oid, section, slid, slname, fade, dates, datee, pkg, children )
 {
   this.oid      = oid;        // Order Id
   this.section  = section;    // Media Plan Section, generally Default or Default Section
   this.slid     = slid;       // Sales Line Item ID
   this.slname   = slname;     // Sales Line Item Name - How it's been named
+  if( fade )    { this.fade   = fade; } // t/f - do we fade out the SLName?
+  else          { this.fade   = false; }
   this.dates    = dates;      // Start date
   this.datee    = datee;      // End Date
   this.pkg      = pkg;        // Package
   this.children = children;   // Children line items
 }
-function Childlineitem(oid, section, slid, plid, slname, dates, datee)
+function Childlineitem(oid, section, slid, plid, slname, fade, dates, datee, subs)
 {
   this.oid      = oid;        // Order Id
   this.section  = section;    // Media Plan Section, generally Default or Default Section
   this.slid     = slid;       // Sales Line Item ID
   this.plid     = plid;       // Parent Sales Line Item ID
   this.slname   = slname;     // Sales Line Item Name - How it's been named
+  if( fade )    { this.fade   = fade; } // t/f - do we fade out the SLName?
+  else          { this.fade   = false; }
   this.dates    = dates;      // Start date
   this.datee    = datee;      // End Date
+  this.subs     = subs;       // Child lines for the ad line item, with individual ad sizes
 }
