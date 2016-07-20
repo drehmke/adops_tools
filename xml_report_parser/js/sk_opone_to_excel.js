@@ -62,6 +62,8 @@ $(document).ready(function() {
                           var fade = fadeSalesLineItemName( $lineitem.attr("Sales_Line_Item_Name") );
                           currParentlineitem = new Parentlineitem( $lineitem.attr("Order_ID"), $lineitem.attr("Section_Name"), $lineitem.attr("Sales_Line_Item_ID"), $lineitem.attr("Sales_Line_Item_Name"), fade, $lineitem.attr("Start_Date"), $lineitem.attr("End_Date"), $lineitem.attr("Package")  );
 
+                          if( fade )  { var needAdSizes = false; }
+                          else        { var needAdSizes = true; }
                           var childArr = [];
                           // re-parse the file looking for any Parent_Line_Item_ID's that match the current Sales_Line_Item_ID
                           $(data).find('OrderLineItemID').each(function( index ) {
@@ -69,8 +71,17 @@ $(document).ready(function() {
                             if( $slineitem.attr("Parent_Line_Item_ID") == $lineitem.attr("Sales_Line_Item_ID") )
                             {
                               var cfade = fadeSalesLineItemName( $slineitem.attr("Sales_Line_Item_Name") );
+                              alert( needAdSizes );
+                              if( needAdSizes )
+                              { // the parent line item can determine if we need to find ad sizes
+                                var subAdSizes = findAdSizes( $slineitem.attr("Sales_Line_Item_Name") );
+                                needAdSizes = checkLineName( $slineitem.attr("Sales_Line_Item_Name") );
+                              }
+                              else
+                              { // we need to run some checks to see if we really need to find ad sizes
+
+                              }
                               // now we need to determine if there are any ad sizes we need to break out into sublines
-                              var subAdSizes = findAdSizes( $slineitem.attr("Sales_Line_Item_Name") );
                               //alert( subAdSizes );
                               childArr[childArr.length] = new Childlineitem( $slineitem.attr("Order_ID"), $slineitem.attr("Section_Name"), $slineitem.attr("Sales_Line_Item_ID"), $slineitem.attr("Parent_Line_Item_ID"), $slineitem.attr("Sales_Line_Item_Name"), cfade, $slineitem.attr("Start_Date"), $slineitem.attr("End_Date"), subAdSizes );
                             }
@@ -231,7 +242,7 @@ function childRow( lineObj, colors )
   if( lineObj.fade )
   {
     var clss = 'style="color:'+ colors.fontfade +';"';
-    size = '---';
+    size = 'n/a';
   }
   else
   {
@@ -309,6 +320,27 @@ function findAdSizes( linename )
     }
 
     return adArr;
+}
+
+function checkLineName( linename )
+{
+  alert( 'checking Line name ' + linename );
+  // quick check - will this line be faded
+  var fade = fadeSalesLineItemName( linename );
+  if( !fade )
+  {
+    // if we're not fading, how many ad sizes are on this line
+    var subAdSizes = findAdSizes( linename );
+    if( subAdSizes.length > 1)
+    {
+      alert( 'we need more checking' );
+      var noCheck = "Production|Added_Value|Added Value|mini-syndi|Rotational|Fee|AMP|BTF|Social|Video|FI|Audience Target|Geo Target|HPTO_1034x90|_Fee";
+      var wRe = new RegExp( '('+ noCheck + ')', 'i' );
+      var wResult = wRe.exec( linename );
+      alert( wResult );
+    }
+  }
+
 }
 
 // ---- Package Specific Functions ---------------------------------------------
