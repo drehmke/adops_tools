@@ -57,10 +57,9 @@ $(document).ready(function() {
 
                         if( !$lineitem.attr("Parent_Line_Item_ID") )
                         { // if we don't have a parent ID, than we are a section header (folder in Operative)
-                          // also, need to check to see if we need to fade this line or not
-                          // create a new Parentlineitem( oid, section, slid, slname, dates, datee )
-                          var fade = fadeSalesLineItemName( $lineitem.attr("Sales_Line_Item_Name") );
-                          currParentlineitem = new Parentlineitem( $lineitem.attr("Order_ID"), $lineitem.attr("Section_Name"), $lineitem.attr("Sales_Line_Item_ID"), $lineitem.attr("Sales_Line_Item_Name"), fade, $lineitem.attr("Start_Date"), $lineitem.attr("End_Date"), $lineitem.attr("Package")  );
+                          // create a new Parentlineitem( oid, section, slid, slname, dates, datee ), also, need to check to see if we need to fade this line or not
+                          //var fade = fadeSalesLineItemName( $lineitem.attr("Sales_Line_Item_Name") );
+                          currParentlineitem = new Parentlineitem( $lineitem.attr("Order_ID"), $lineitem.attr("Section_Name"), $lineitem.attr("Sales_Line_Item_ID"), $lineitem.attr("Sales_Line_Item_Name"), '', $lineitem.attr("Start_Date"), $lineitem.attr("End_Date"), $lineitem.attr("Package")  );
 
                           var childArr = [];
                           // re-parse the file looking for any Parent_Line_Item_ID's that match the current Sales_Line_Item_ID
@@ -69,16 +68,23 @@ $(document).ready(function() {
                             if( $slineitem.attr("Parent_Line_Item_ID") == $lineitem.attr("Sales_Line_Item_ID") )
                             {
                               var cfade = fadeSalesLineItemName( $slineitem.attr("Sales_Line_Item_Name") );
-                              // now we need to determine if there are any ad sizes we need to break out into sublines
-                              var subAdSizes = findAdSizes( $slineitem.attr("Sales_Line_Item_Name") );
-                              //alert( subAdSizes );
-                              childArr[childArr.length] = new Childlineitem( $slineitem.attr("Order_ID"), $slineitem.attr("Section_Name"), $slineitem.attr("Sales_Line_Item_ID"), $slineitem.attr("Parent_Line_Item_ID"), $slineitem.attr("Sales_Line_Item_Name"), cfade, $slineitem.attr("Start_Date"), $slineitem.attr("End_Date"), subAdSizes );
+                              childArr[childArr.length] = new Childlineitem( $slineitem.attr("Order_ID"), $slineitem.attr("Section_Name"), $slineitem.attr("Sales_Line_Item_ID"), $slineitem.attr("Parent_Line_Item_ID"), $slineitem.attr("Sales_Line_Item_Name"), cfade, $slineitem.attr("Start_Date"), $slineitem.attr("End_Date"), '' );
                             }
                           });
                           currParentlineitem.children = childArr;
                           currCampaign[currCampaign.length] = currParentlineitem;
                         }
                     });
+                    // ---- Manipulate the Data --------------------------------
+                    // Now that the data is in objects and arrays, we can work with it a little more, maybe?
+                    if( currCampaign.length > 0 )
+                    {
+                      for( i = 1; i < currCampaign.length; i++ )
+                      { // some packages need to be processed special-like, so let's do those
+                        var soldpackage = currCampaign[i];
+                        soldpackage.fade = fadeSalesLineItemName( soldpackage.slname );
+                      }
+                    }
 
                     // ---- Display The Data! ----------------------------------
                     // Show the campaign info right under the file input
@@ -231,7 +237,7 @@ function childRow( lineObj, colors )
   if( lineObj.fade )
   {
     var clss = 'style="color:'+ colors.fontfade +';"';
-    size = '---';
+    size = 'n/a';
   }
   else
   {
@@ -311,16 +317,15 @@ function findAdSizes( linename )
     return adArr;
 }
 
+function checkLineName( linename )
+{
+  var noCheck = "Production|Added_Value|Added Value|mini-syndi|Rotational|Fee|AMP|BTF|Social|Video|FI|Audience Target|Geo Target|HPTO_1034x90|_Fee";
+  var wRe = new RegExp( '('+ noCheck + ')', 'i' );
+  var wResult = wRe.exec( linename );
+  return wResult[0];
+}
+
 // ---- Package Specific Functions ---------------------------------------------
-function sksponsorship()
-{
-
-}
-function skmaddedvalueallsizes()
-{
-  var adsizes = ["300x250", "728x90", "320x50"];
-
-}
 
 // ---- Export to Excel --------------------------------------------------------
 var tableToExcel = (function () {
@@ -373,7 +378,7 @@ function Parentlineitem(oid, section, slid, slname, fade, dates, datee, pkg, chi
   this.pkg      = pkg;        // Package
   this.children = children;   // Children line items
 }
-function Childlineitem(oid, section, slid, plid, slname, fade, dates, datee, subs)
+function Childlineitem(oid, section, slid, plid, slname, fade, dates, datee, subs )
 {
   this.oid      = oid;        // Order Id
   this.section  = section;    // Media Plan Section, generally Default or Default Section
