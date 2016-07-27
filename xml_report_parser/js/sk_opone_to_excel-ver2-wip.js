@@ -83,33 +83,6 @@ $(document).ready(function() {
                       { // some packages need to be processed special-like, so let's do those
                         var soldpackage = currCampaign[i];
                         soldpackage.fade = fadeSalesLineItemName( soldpackage.slname );
-
-                        switch( soldpackage.pkg )
-                        {
-                          case "SKM: Preroll: Video Package":
-                            for( j = 0; j < soldpackage.children.length; j++ )
-                            {
-                              if( j == 0 )  { soldpackage.children[j].subs = 'vast/1x1'; }
-                              else          { soldpackage.children[j].subs = ''; }
-                            }
-                            break;
-                          case "SKM: Amps - All Sizes":
-                            for( j = 0; j < soldpackage.children.length; j++ )
-                            {
-                              if( j == 0 )  { soldpackage.children[j].subs = '1x1'; }
-                              else          { soldpackage.children[j].subs = ''; }
-                            }
-                            break;
-                          case "SK.com HPTO with Arrival":
-                            //alert( 'HPTO! with ' + soldpackage.children.length + ' lines');
-                            //soldpackage.children = skcomHptoArrival( soldpackage.children );
-                            break;
-                          case "SKM: Added Value - All Sizes":
-                            alert( 'Added Value! with ' + soldpackage.children.length + ' lines' );
-                            skAddedValue( soldpackage.children );
-                            break;
-                          //default:
-                        }
                       }
                     }
 
@@ -125,6 +98,7 @@ $(document).ready(function() {
                     htrw.push( tableHeader( colors ) );
 
                     // table body
+
                     if( currCampaign.length > 0 )
                     {
                       for( i = 1; i < currCampaign.length; i++ )
@@ -268,15 +242,12 @@ function childRow( lineObj, colors )
   else
   {
     var clss = '';
-    if( Array.isArray( lineObj.subs ) )
-    {
-      if( lineObj.subs.length == 1 )      { size = lineObj.subs[0]; }
-      else if( lineObj.subs.length > 1 )  { size = '---';}
-      else                                { size = ''; }
-    }
-    else if( lineObj.subs != '' )         { size = lineObj.subs; }
-    else if( lineObj.subs == 'undefined') { size = 'n/a'; }
-    else                                  { size = ''; }
+    if( lineObj.subs.length == 1 )
+    { size = lineObj.subs[0]; }
+    else if( lineObj.subs.length > 1 )
+    { size = '---'; }
+    else
+    { size = '[Ad Size]'; }
   }
 
   var row = '<tr>';
@@ -317,22 +288,29 @@ function fadeSalesLineItemName( slname )
 
 function findAdSizes( linename )
 {
+    //var newrow      = '';
     var splitname   = '';
     var adArr = [];
 
     var arLineParts = linename.split('|');
-    for( x = 0; x < arLineParts.length; x++ )
+    //console.log(arLineParts.length);
+    for( i = 0; i < arLineParts.length; i++ )
     {
+        //console.log(splitname);
         if( !splitname )    { splitname = linename; }
 
-        var checkAdSizes = "1034x90|970x250|970x90|970x66|300x1050|300x600|300x250|728x90|320x50|320x480|180x50|160x600|Reskin";
+        var checkAdSizes = "1034x90|970x250|970x90|970x66|300x1050|300x600|300x250|728x90|320x50|320x480|180x50|Reskin";
         var sizeRe = new RegExp( '(' + checkAdSizes + ')', "i");
         var adSize = sizeRe.exec(splitname);
         if( adSize )
         {
-          adArr.push(adSize[0]);
-          newsplit = splitname.split(adSize[0]);
-          splitname = newsplit[1];
+            newsplit = splitname.split(adSize[0]);
+            splitname = newsplit[1];
+            //newrow += addEmptyRow( adSize[0], rdystyle );
+            adArr[adArr.length] = adSize[0];
+        }
+        else {
+          adArr = '';
         }
     }
 
@@ -347,57 +325,8 @@ function checkLineName( linename )
   return wResult[0];
 }
 
-
 // ---- Package Specific Functions ---------------------------------------------
-function skAddedValue( childrenArr )
-{
-  alert( 'We have ' + childrenArr.length + ' lines to work with' );
-}
 
-function skcomHptoArrival( childrenArr )
-{ // I want to rearrange to make sure these are in a specific order & we don't need to find sizes, because they are defined
-/*
-  var tmp = [];
-  while( tmp.length < childrenArr.length )
-  {
-    for( x in childrenArr )
-    {
-      alert( childrenArr[x].slname );
-      if( childrenArr[x].slname == "sheknows.com - HPTO_1034x90 | 320x50 | 728x90 | 970x250 | 970x90" )
-      {
-        alert( 'Longest HPTO ATF line' );
-      }
-      else if( childrenArr[x].slname == "sheknows.com - HPTO_320x50 | 728x90" )
-      {
-        alert( 'Shortest HPTO ATF line' );
-      }
-      else if( childrenArr[x].slname == "sheknows.com - HPTO_728x90 | BTF" )
-      {
-        alert( 'BTF Line' );
-        childrenArr[x].subs = '728x90';
-        tmp[1] = childrenArr[x];
-      }
-      else if( childrenArr[x].slname == "SKM - FI_970x250" )
-      {
-        alert( 'Desktop arrival' );
-        childrenArr[x].subs = '970x250';
-        tmp[2] = childrenArr[x];
-      }
-      else if( childrenArr[x].slname == "SKM - FI Tablet_728x90" )
-      {
-        alert( 'Tablet arrival' );
-        childrenArr[x].subs = '728x90';
-        tmp[3] = childrenArr[x];
-      }
-      else
-      {
-        tmp[tmp.length] = childrenArr[x];
-      }
-    }
-  }
-  return tmp;
-*/
-}
 // ---- Export to Excel --------------------------------------------------------
 var tableToExcel = (function () {
     var uri = 'data:application/vnd.ms-excel;base64,'
@@ -427,8 +356,8 @@ function Colors()
   this.bgcolheader    = '#DDEBF7';  // light blue
   this.bgsection      = '#D6DCE4';  // dusky blue
   this.bgreadystyle   = '#ffffe0';  // light yellow
-  this.bgnotlisted    = '#ff9999';  //'#ff0000';  // red
-  this.fontnotlisted  = '#000000';  // black
+  this.bgnotlisted    = '#ff0000';  // red
+  this.fontnotlisted  = '#ffffff';  // white
   this.fontfade       = '#808080';  // dark grey
 }
 function Campaigninfo( cname, cstatus )
@@ -436,26 +365,28 @@ function Campaigninfo( cname, cstatus )
   this.cname = cname;
   this.cstatus = cstatus;
 }
-function Parentlineitem(oid, section, slid, slname, fade = false, dates, datee, pkg, children )
+function Parentlineitem(oid, section, slid, slname, fade, dates, datee, pkg, children )
 {
   this.oid      = oid;        // Order Id
   this.section  = section;    // Media Plan Section, generally Default or Default Section
   this.slid     = slid;       // Sales Line Item ID
   this.slname   = slname;     // Sales Line Item Name - How it's been named
-  this.fade     = fade;       // t/f - do we fade out the SLName?
+  if( fade )    { this.fade   = fade; } // t/f - do we fade out the SLName?
+  else          { this.fade   = false; }
   this.dates    = dates;      // Start date
   this.datee    = datee;      // End Date
   this.pkg      = pkg;        // Package
   this.children = children;   // Children line items
 }
-function Childlineitem(oid, section, slid, plid, slname, fade = false, dates, datee, subs )
+function Childlineitem(oid, section, slid, plid, slname, fade, dates, datee, subs )
 {
   this.oid      = oid;        // Order Id
   this.section  = section;    // Media Plan Section, generally Default or Default Section
   this.slid     = slid;       // Sales Line Item ID
   this.plid     = plid;       // Parent Sales Line Item ID
   this.slname   = slname;     // Sales Line Item Name - How it's been named
-  this.fade     = fade;       // t/f - do we fade out the SLName?
+  if( fade )    { this.fade   = fade; } // t/f - do we fade out the SLName?
+  else          { this.fade   = false; }
   this.dates    = dates;      // Start date
   this.datee    = datee;      // End Date
   this.subs     = subs;       // Child lines for the ad line item, with individual ad sizes
