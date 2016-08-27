@@ -1,23 +1,313 @@
-                                            // Add sizes for lines that only have one ad size
-                                            // If the line name has "Mobile rotational" ...
-                                            var mrRe = new RegExp( 'Rotational_320x480', 'i');
-                                            var mrResult = mrRe.exec( sslname );
-                                            // If the line name as "Rotational" ...
-                                            var rRe = new RegExp( 'Rotational_970x250', 'i');
-                                            var rResult = rRe.exec( sslname );
-                                            // if the line name has "Video" ...
-                                            var vRe = new RegExp( "Video", "i");
-                                            var vResult = vRe.exec( sslname );
-                                            // if the line name is 'HPTO_728x90 | BTF'
-                                            var btfRe = new RegExp( "HPTO_7289x0 | BTF" );
-                                            var btfResult = btfRe.exec( sslname );
+$(document).ready(function() {
 
-                                            // these rows have the same number of rows as ad sizes,
-                                            // so no need to add extras, but we need to track the size that was
-                                            // previously added
-                                            // if the line name as 'FI' for arrival units ...
-                                            var fiRe = new RegExp('FI', 'i');
-                                            var fiResult = fiRe.exec( sslname );
-                                                if( fiResult )  { checksize = true; }
-                                            // if the line name has 'Added Value' ...
-                                            // if the line name has 'Multi-Size' ...
+    // The event listener for the file upload
+    document.getElementById('txtFileUpload').addEventListener('change', upload, false);
+
+    // Method that checks that the browser supports the HTML5 File API
+    function browserSupportFileUpload() {
+        var isCompatible = false;
+        if (window.File && window.FileReader && window.FileList && window.Blob) {
+            isCompatible = true;
+        }
+        return isCompatible;
+    }
+
+    // Method that reads and processes the selected file
+    function upload(evt) {
+        if (!browserSupportFileUpload()) {
+            alert('The File APIs are not fully supported in this browser!');
+        } else {
+            var data = null;
+            var file = evt.target.files[0];
+
+            xmlfile = evt.target.files[0]['name'];
+            var fn = xmlfile.split("."); // we know the file name is going to be a .xml, so take that off
+            //console.log(fn[0]);
+            $('#xmlfilename').val( fn[0]  );
+
+            var reader = new FileReader();
+            reader.readAsText(file);
+
+            reader.onload = function(event) {
+                data = $(reader.result);
+                if (data && data.length > 0) {
+                    //alert('Imported -' + data.length + '- rows successfully!');
+                    // ---- custom stuff -----------------------------------------------------------------------
+                    var htrw     = '';
+                    var clss     = '';
+                    var fade     = '';
+
+                    var rdystyle = "background-color: #ffffe0; ";
+
+                    htrw    = '<table style="border: solid 1px black; font-family: Calibri, sans-serif; font-size: 13px;" id="excelData" name="excelData">';
+                    htrw   += '<thead>';
+                    htrw   += '<tr><th colspan="7" style="background-color: #E7E6E6; color: #1F4E78;" id="operativeheader">Operative Lines</th>';
+                    htrw   += '<th></th>';
+                    htrw   += '<th colspan="4" style="color: #1F4E78;">Client Tags</th><th></th></tr>';
+                    //htrw   += '<th colspan="5" style="color: #1F4E78;">Client Tags</th><th></th></tr>';
+                    //htrw   += '<tr style="background-color: #DDEBF7;"><th style="background-color: #DDEBF7;">OID</th>;'
+                    htrw   += '<th style="background-color: #DDEBF7;">Section</th><th style="background-color: #DDEBF7;">Line ID</th><th style="background-color: #DDEBF7;">Parent LID</th><th style="background-color: #DDEBF7;">Line Name</th><th style="background-color: #DDEBF7;">Start</th><th style="background-color: #DDEBF7;">End</th>';
+                    htrw   += '<th style="' + rdystyle +'">Ready</th>';
+                    htrw   += '<th style="background-color: #DDEBF7;">Tag Size</th><th style="background-color: #DDEBF7;">Tag ID</th><th style="background-color: #DDEBF7;">Tag Name</th><th style="background-color: #DDEBF7;">Tag Start</th><th style="background-color: #DDEBF7;">Tag End</th>';
+                    htrw   += '<th style="background-color: #DDEBF7;">Notes</th></tr></thead><tbody>';
+
+                    $(data).find('OrderLineItemID').each(function( index ){
+                        var $lineitem = $(this);
+                        var itera   = index;
+                        var oid     = $lineitem.attr("Order_ID");
+                        var section = $lineitem.attr("Section_Name");
+                        var slid    = $lineitem.attr("Sales_Line_Item_ID");
+                        var pid     = $lineitem.attr("Parent_Line_Item_ID");
+                        var slname  = $lineitem.attr("Sales_Line_Item_Name");
+                        var dates   = $lineitem.attr("Start_Date");
+                        var datee   = $lineitem.attr("End_Date");
+                        var ci      = ';'
+                        var checkme = '';
+
+
+                        // first round only
+                        if( index == 0 )
+                        {
+                            //var ostat   = $lineitem.attr("Order_Status");
+                            //var oname   = $lineitem.attr( "Order_Name" );
+                            ci  = '<div><strong>Campaign Name: </strong>' + $lineitem.attr( "Order_Name" ) + '</div>';
+                            ci += '<div><strong>Campaign Status: </strong>' + $lineitem.attr( "Order_Status" ) + '</div>'
+                            $('#dvCampaignInfo').append($(ci));
+                        }
+
+                        // if we don't have a parent ID, than we are a section header (folder in Operative)
+                        if( !pid )
+                        {
+                            clss += 'font-weight: 800; background-color: #D6DCE4; ';
+
+                            //htrw += '<tr style="'+ clss +'"><td class="'+ clss +'">' + oid + '</td>';
+                            htrw += '<td style="'+ clss +'">' + section + '</td>';
+                            htrw += '<td style="'+ clss +'">' + slid + '</td>';
+                            htrw += '<td style="'+ clss +'"></td>';
+                                var productionFee = "Production|Social|Offline Event Activation_Fee";
+                                var pRe = new RegExp( '('+ productionFee + ')', 'i' );
+                                var pResult = pRe.exec( slname );
+                                if( pResult ) { fade = "color: #808080; "; }
+                            htrw += '<td style="'+ clss + fade + '">' + slname + '</td>';
+                                fade = '';
+                            htrw += '<td style="'+ clss +'">' + dates + '</td>';
+                            htrw += '<td style="'+ clss +'">' + datee + '</td>';
+                            htrw += '<td style="'+ clss + ' "></td>'; // ready
+                            htrw += '<td style="'+ clss +'" colspan="5"></td>'; // don't need client fields
+                            htrw += '<td style="'+ clss +'"></td>'; // notes
+                            htrw += '</tr>'; // end row
+                            clss = '';
+
+                            // now we're going to iterate through the object again to find just the lines that have this parent ID
+                            var splitname   = '';
+                            var prevadsize  = '';
+                            var prevline    = '';
+                            var currline    = '';
+
+                            $(data).find('OrderLineItemID').each(function( index ){
+                                var $slineitem = $(this);
+                                var soid     = $slineitem.attr("Order_ID");
+                                var ssection = $slineitem.attr("Section_Name");
+                                var sslid    = $slineitem.attr("Sales_Line_Item_ID");
+                                var spid     = $slineitem.attr("Parent_Line_Item_ID");
+                                var sslname  = $slineitem.attr("Sales_Line_Item_Name");
+                                var sdates   = $slineitem.attr("Start_Date");
+                                var sdatee   = $slineitem.attr("End_Date");
+                                var checksize = false;
+                                //console.log('slid: ' + slid + ' and spid: ' + spid);
+
+                                if( slid == spid ) // if the sales LID == the parent LID
+                                {
+                                    // If this is a Production Fee or Social Sharing/Marketing line,
+                                    // fade out because we don't need it, really
+                                    // it's included because I don't want to manipulate the data, just display it
+                                    var productionFee = "Production|Social|Offline Event Activation_Fee";
+                                    var pRe = new RegExp( '('+ productionFee + ')', 'i' );
+                                    var pResult = pRe.exec( sslname );
+                                    if( pResult ) { fade = "color: #808080; "; }
+
+                                    //htrw += '<tr style="'+ clss +'"><td '+ clss +'>' + soid + '</td>';
+                                    htrw += '<td style="'+ clss +'">' + ssection + '</td>';
+                                    htrw += '<td style="'+ clss +'">' + sslid + '</td>';
+                                    htrw += '<td style="'+ clss +'">' + spid + '</td>';
+                                    htrw += '<td style="'+ clss + fade + '">' + sslname + '</td>';
+                                    fade = ''; // clear this so it doesn't change all of the line names
+                                    htrw += '<td style="'+ clss +'">' + sdates + '</td>';
+                                    htrw += '<td style="'+ clss +'">' + sdatee + '</td>';
+                                    htrw += '<td style="'+ clss + rdystyle + '"></td>'; // ready
+                                    htrw += '<td style="'+ clss +'">'; // tag size -- start
+
+                                    // need to add sizes for the line's we're not adding extra lines for ...
+                                    // now to try and have some fun - aka add rows for sponsorships
+                                    var noCheck = "Production|Added_Value|Added Value|mini-syndi|Rotational|Fee|AMP|BTF|Social|Video|FI|Audience Target|Geo Target|HPTO_1034x90|Offline Event Activation_Fee";
+                                    var wRe = new RegExp( '('+ noCheck + ')', 'i' );
+                                    var wResult = wRe.exec( sslname );
+                                    if( wResult )
+                                    {
+
+                                        if( wResult[0] == "Video" )
+                                        {   // it may be a video amp
+                                            var patt = /AMP/i;
+                                            var result = patt.test(sslname);
+                                            if( result )    { currline = 'AMP'; }
+                                            else            { currline = 'Video'; }
+                                        }
+                                        else
+                                        {
+                                            currline = wResult[0];
+                                        }
+
+                                        switch( currline )
+                                        {   // empty cells: Social, Video, ProductionFee -----------------------
+                                            case "Social":
+                                            case "Production":
+                                            case "Offline Event Activation_Fee":
+                                                    htrw += '<span style="color: #808080">n/a</span>';
+                                                break;
+                                            // 1x1s ------------------------------------------------------------
+                                            case "AMP":
+                                            case "mini-syndi":
+                                                if( currline != prevline )
+                                                { prevadsize = ''; } // incase unique 1x1s are stacked
+                                                if( prevadsize != '1x1' )
+                                                {
+                                                    htrw += '1x1';
+                                                    prevadsize = '1x1';
+                                                }
+                                                break;
+                                            // Special Cases --------------------------------------------------
+                                            case "BTF":
+                                                htrw += '728x90';
+                                                break;
+                                            case "HPTO_1034x90":
+                                                htrw += '1034x90';
+                                                break;
+                                            case "Video":
+                                                htrw += 'vast/1x1';
+                                                break;
+                                            // Everything else -------------------------------------------------
+                                            default:
+                                                //console.log( wResult[0] );
+                                                if( !splitname )    { checkme = sslname; }
+                                                else                { checkme = splitname; }
+                                                //console.log( checkme );
+                                                var checkAdSizes = "728x90|970x250|970x66|300x250|320x50|320x480|300x600|160x600";
+                                                var sizeRe = new RegExp( '(' + checkAdSizes + ')', "i");
+                                                var sizeResult = sizeRe.exec( checkme );
+
+                                                if( sizeResult )
+                                                {
+                                                    var test = checkme.split(sizeResult[0]);
+                                                    //console.log( sizeResult[0] );
+
+                                                    if( prevadsize != sizeResult[0] )
+                                                    {
+                                                        htrw += sizeResult[0];
+                                                        splitname = test[1];
+                                                        prevadsize = sizeResult[0];
+                                                    }
+                                                }
+                                        }
+
+                                    }
+                                    else
+                                    { htrw += "-----"; }
+                                    htrw += '</td>'; // tag size -- end
+                                    htrw += '<td style="'+ clss +'"></td>'; // tag id
+                                    htrw += '<td style="'+ clss +'"></td>'; // tag name
+                                    htrw += '<td style="'+ clss +'"></td>'; // tag start
+                                    htrw += '<td style="'+ clss +'"></td>'; // tag end
+                                    htrw += '<td style="'+ clss +'"></td>'; // notes
+                                    htrw += '</tr>'; // end row
+
+                                    if( !wResult )
+                                    {
+                                        htrw += findAdSizes( sslname, rdystyle );
+                                        prevadsize = '';
+                                    }
+                                    prevline = currline;
+                                }
+                            });
+                        }
+
+                        //console.log(itera);
+
+                    });
+
+                    htrw += '</tbody></table>';
+                    $('#dvImportRows').append($(htrw));
+                    //console.log(data[1] + "\n");
+                    // ---- end custom stuff -------------------------------------------------------------------
+
+                } else {
+                    alert('No data to import!');
+                }
+            };
+            reader.onerror = function() {
+                alert('Unable to read ' + file.fileName);
+            };
+        }
+    }
+
+});
+
+function findAdSizes( linename, rdystyle )
+{
+    var newrow      = '';
+    var splitname   = '';
+
+    var arLineParts = linename.split('|');
+    //console.log(arLineParts.length);
+    for( i = 0; i < arLineParts.length; i++ )
+    {
+        //console.log(splitname);
+        if( !splitname )    { splitname = linename; }
+
+        var checkAdSizes = "1034x90|970x250|970x90|970x66|300x1050|300x600|300x250|728x90|320x50|320x480|180x50|Reskin";
+        var sizeRe = new RegExp( '(' + checkAdSizes + ')', "i");
+        var adSize = sizeRe.exec(splitname);
+        if( adSize )
+        {
+            newsplit = splitname.split(adSize[0]);
+            splitname = newsplit[1];
+            newrow += addEmptyRow( adSize[0], rdystyle );
+        }
+    }
+
+    return newrow;
+}
+
+function addEmptyRow( size, rdystyle )
+{
+    if( size == 'Reskin' )  { size = '1x1'; }
+    if( size == '180x50')   { size = '1x1'; }
+    newrow  = '<tr>';
+    //newrow += '<td></td> <td></td> <td></td> <td></td> <td></td> <td></td> <td></td>'; // operative cells
+    newrow += '<td></td> <td></td> <td></td> <td></td> <td></td> <td></td>'; // operative cells
+    newrow += '<td style="' + rdystyle + '"></td>'; // ready cell
+    newrow += '<td>'+ size+'</td> <td></td> <td></td> <td></td> <td></td>'; // client tag cells
+    newrow += '<td></td>'; // notes cell
+    newrow += '</tr>';
+
+    return newrow;
+}
+
+// ---- Export to Excel ----------------------------------------------------------------------------------------
+var tableToExcel = (function () {
+    var uri = 'data:application/vnd.ms-excel;base64,'
+            , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+            , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+            , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+    return function (table, name) {
+        if (!table.nodeType) table = document.getElementById(table)
+        var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+
+        var xmlfilename = $("#xmlfilename").val();
+        //console.log(xmlfilename);
+        document.getElementById("dlink").href = uri + base64(format(template, ctx));
+        document.getElementById("dlink").download = xmlfilename + ".xls";
+        document.getElementById("dlink").click();
+
+    }
+})()
+// ---- end Export to Excel ------------------------------------------------------------------------------------
