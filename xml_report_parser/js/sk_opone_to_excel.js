@@ -83,6 +83,7 @@ $(document).ready(function() {
                       { // some packages need to be processed special-like, so let's do those
                         var soldpackage = currCampaign[i];
                         soldpackage.fade = fadeSalesLineItemName( soldpackage.slname );
+<<<<<<< HEAD
 
                         switch( soldpackage.pkg )
                         {
@@ -110,6 +111,8 @@ $(document).ready(function() {
                             break;
                           //default:
                         }
+=======
+>>>>>>> origin/ver2
                       }
                     }
 
@@ -347,12 +350,16 @@ function checkLineName( linename )
   return wResult[0];
 }
 
+<<<<<<< HEAD
 
 // ---- Package Specific Functions ---------------------------------------------
 function skAddedValue( childrenArr )
 {
   alert( 'We have ' + childrenArr.length + ' lines to work with' );
 }
+=======
+// ---- Package Specific Functions ---------------------------------------------
+>>>>>>> origin/ver2
 
 function skcomHptoArrival( childrenArr )
 { // I want to rearrange to make sure these are in a specific order & we don't need to find sizes, because they are defined
@@ -448,7 +455,11 @@ function Parentlineitem(oid, section, slid, slname, fade = false, dates, datee, 
   this.pkg      = pkg;        // Package
   this.children = children;   // Children line items
 }
+<<<<<<< HEAD
 function Childlineitem(oid, section, slid, plid, slname, fade = false, dates, datee, subs )
+=======
+function Childlineitem(oid, section, slid, plid, slname, fade, dates, datee, subs )
+>>>>>>> origin/ver2
 {
   this.oid      = oid;        // Order Id
   this.section  = section;    // Media Plan Section, generally Default or Default Section
